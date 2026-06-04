@@ -1,0 +1,235 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum ProjectStatus {
+  active
+  inactive
+}
+
+enum SubmissionMode {
+  named
+  anonymous
+}
+
+enum RiskLevel {
+  green
+  yellow
+  red
+}
+
+enum AlertSeverity {
+  low
+  medium
+  high
+  critical
+}
+
+enum AlertType {
+  sentiment_sudden_drop
+  chronic_low_engagement
+  critical_disengagement
+  low_job_satisfaction
+  poor_worklife_balance
+  low_manager_support
+  low_recommendation
+  team_enps_drop
+}
+
+enum RecommendationPriority {
+  low
+  medium
+  high
+}
+
+enum RecommendationStatus {
+  pending
+  in_progress
+  completed
+  declined
+}
+
+enum RecommendationType {
+  one_on_one_checkin
+  role_career_conversation
+  workload_burnout_review
+  manager_alignment
+  retention_risk_outreach
+  rapid_sentiment_investigation
+  mentorship_development_path
+  team_retrospective
+  manual
+}
+
+model Account {
+  id        String    @id @default(cuid())
+  name      String
+  createdAt DateTime  @default(now())
+  projects  Project[]
+}
+
+model Project {
+  id          String    @id @default(cuid())
+  accountId   String
+  name        String
+  status      ProjectStatus
+  startDate   DateTime
+  account     Account   @relation(fields: [accountId], references: [id])
+  teams       Team[]
+  responses   PulseSurveyResponse[]
+
+  @@index([accountId])
+}
+
+model Team {
+  id          String              @id @default(cuid())
+  projectId   String
+  name        String
+  managerId   String?
+  project     Project             @relation(fields: [projectId], references: [id])
+  manager     Member?             @relation("TeamManager", fields: [managerId], references: [id])
+  members     Member[]
+  forms       PulseSurveyForm[]
+  responses   PulseSurveyResponse[]
+
+  @@index([projectId])
+}
+
+model Member {
+  id                   String            @id @default(cuid())
+  teamId               String
+  name                 String
+  email                String            @unique
+  role                 String
+  managerId            String?
+  startDate            DateTime
+  tenureMonths         Int
+  deliveryLeadId       String?
+  team                 Team              @relation(fields: [teamId], references: [id])
+  manager              Member?           @relation("MemberManager", fields: [managerId], references: [id])
+  reports              Member[]          @relation("MemberManager")
+  deliveryLead         Member?           @relation("DeliveryLead", fields: [deliveryLeadId], references: [id])
+  deliveryLeadFor      Member[]          @relation("DeliveryLead")
+  managedTeam          Team[]            @relation("TeamManager")
+  responses            PulseSurveyResponse[]
+  scores               SentimentScore[]
+  alerts               RiskAlert[]
+  recommendations      Recommendation[]
+  managerNotesAsTarget ManagerNote[]     @relation("ManagerNoteMember")
+  managerNotesAsAuthor ManagerNote[]     @relation("ManagerNoteAuthor")
+
+  @@index([teamId])
+}
+
+model PulseSurveyForm {
+  id             String                @id @default(cuid())
+  teamId         String
+  title          String
+  cadence        String
+  allowAnonymous Boolean
+  questions      Json
+  team           Team                  @relation(fields: [teamId], references: [id])
+  responses      PulseSurveyResponse[]
+
+  @@index([teamId])
+}
+
+model PulseSurveyResponse {
+  id              String         @id @default(cuid())
+  formId          String
+  submissionMode  SubmissionMode
+  memberId        String?
+  anonymousToken  String?
+  teamId          String
+  projectId       String
+  cycleStart      DateTime
+  q1              Int
+  q2              Int
+  q3              Int
+  q4              Int
+  q5              Int
+  q6              Int
+  q7              Int
+  feedback        String
+  submittedAt     DateTime       @default(now())
+  form            PulseSurveyForm @relation(fields: [formId], references: [id])
+  member          Member?        @relation(fields: [memberId], references: [id])
+  team            Team           @relation(fields: [teamId], references: [id])
+  project         Project        @relation(fields: [projectId], references: [id])
+
+  @@index([teamId, cycleStart])
+  @@index([memberId, cycleStart])
+}
+
+model SentimentScore {
+  id                    String    @id @default(cuid())
+  memberId              String
+  cycleStart            DateTime
+  pulseScore            Int
+  jobSatisfactionScore  Int
+  workLifeBalanceScore  Int
+  managerSupportScore   Int
+  growthScore           Int
+  roleClarityScore      Int
+  recommendationScore   Int
+  compositeScore        Int
+  disengagementScore    Int
+  riskLevel             RiskLevel
+  member                Member    @relation(fields: [memberId], references: [id])
+
+  @@unique([memberId, cycleStart])
+  @@index([cycleStart, riskLevel])
+}
+
+model ManagerNote {
+  id        String   @id @default(cuid())
+  memberId  String
+  managerId String
+  score     Int
+  note      String
+  notedAt   DateTime @default(now())
+  member    Member   @relation("ManagerNoteMember", fields: [memberId], references: [id])
+  manager   Member   @relation("ManagerNoteAuthor", fields: [managerId], references: [id])
+
+  @@index([memberId])
+}
+
+model RiskAlert {
+  id             String        @id @default(cuid())
+  memberId       String
+  alertType      AlertType
+  severity       AlertSeverity
+  message        String
+  triggeredAt    DateTime      @default(now())
+  acknowledgedAt DateTime?
+  acknowledgedBy String?
+  actionTaken    String?
+  resolvedAt     DateTime?
+  member         Member        @relation(fields: [memberId], references: [id])
+
+  @@index([severity, resolvedAt])
+  @@index([memberId, resolvedAt])
+}
+
+model Recommendation {
+  id              String                 @id @default(cuid())
+  memberId        String
+  type            RecommendationType
+  title           String
+  description     String
+  suggestedAction String
+  priority        RecommendationPriority
+  status          RecommendationStatus   @default(pending)
+  createdAt       DateTime               @default(now())
+  createdBy       String
+  targetDate      DateTime
+  member          Member                 @relation(fields: [memberId], references: [id])
+
+  @@index([status, priority])
+  @@index([memberId])
+}

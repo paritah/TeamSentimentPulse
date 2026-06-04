@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PulseCheck — Team Sentiment Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    .card{background:white;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,0.08);padding:1.25rem;}
+    .badge{padding:2px 10px;border-radius:99px;font-size:0.75rem;font-weight:600;}
+    .badge-open{background:#fef3c7;color:#92400e;}
+    .badge-progress{background:#dbeafe;color:#1e40af;}
+    .badge-resolved{background:#d1fae5;color:#065f46;}
+    .badge-dismissed{background:#f3f4f6;color:#6b7280;}
+    .score-pill{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;font-weight:700;font-size:0.85rem;}
+    .score-low{background:#fee2e2;color:#b91c1c;}
+    .score-mid{background:#fef9c3;color:#854d0e;}
+    .score-high{background:#dcfce7;color:#166534;}
+    input,select,textarea{border:1px solid #d1d5db;border-radius:8px;padding:8px 12px;width:100%;font-size:0.875rem;outline:none;}
+    input:focus,select:focus,textarea:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.15);}
+    .btn{padding:8px 20px;border-radius:8px;font-weight:600;font-size:0.875rem;cursor:pointer;border:none;transition:opacity 0.15s;}
+    .btn:hover{opacity:0.85;}
+    .btn-primary{background:#6366f1;color:white;}
+    .btn-success{background:#10b981;color:white;}
+    .btn-sm{padding:4px 12px;font-size:0.78rem;}
+    .nav-link{padding:10px 16px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:0.875rem;color:#374151;transition:background 0.15s;}
+    .nav-link:hover,.nav-link.active{background:#eef2ff;color:#4f46e5;font-weight:600;}
+    .kanban-col{background:#f8fafc;border-radius:12px;padding:12px;min-height:180px;}
+    .kanban-card{background:white;border-radius:8px;padding:12px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,0.07);}
+    .p1{border-left:4px solid #ef4444;}
+    .p2{border-left:4px solid #f59e0b;}
+    .p3{border-left:4px solid #10b981;}
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+<!-- ── LOGIN SCREEN ─────────────────────────────────────────────────────── -->
+<div id="login-screen" class="min-h-screen flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden">
+    <div class="bg-indigo-600 px-8 py-6 text-white">
+      <div class="flex items-center gap-3 mb-2">
+        <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        </div>
+        <span class="text-2xl font-bold">PulseCheck</span>
+      </div>
+      <p class="text-indigo-200 text-sm">Team Sentiment Platform</p>
+    </div>
+    <div class="px-8 py-8">
+      <h2 class="text-lg font-semibold text-gray-800 mb-1">Sign in</h2>
+      <p class="text-sm text-gray-500 mb-6">Enter your work email to continue</p>
+      <form id="login-form" onsubmit="loginByEmail(event)" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Work Email</label>
+          <input type="email" id="login-email" placeholder="yourname@citiustech.com" required
+            class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"/>
+        </div>
+        <button type="submit" id="login-btn" class="btn btn-primary w-full py-3 rounded-xl text-sm">Continue →</button>
+      </form>
+      <div id="login-error" class="hidden mt-4 bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-700"></div>
+      <!-- Confirmed identity card (shown after email match) -->
+      <div id="login-confirm" class="hidden mt-4 bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-3">
+        <div class="flex items-center gap-3">
+          <div id="confirm-avatar" class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0"></div>
+          <div>
+            <div id="confirm-name" class="font-semibold text-gray-800 text-sm"></div>
+            <div id="confirm-meta" class="text-xs text-gray-500"></div>
+            <div id="confirm-access" class="text-xs text-indigo-600 font-medium mt-0.5"></div>
+          </div>
+        </div>
+        <button onclick="confirmLogin()" class="btn btn-primary w-full mt-3 text-sm">Sign in as this person</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── APP SHELL (hidden until logged in) ───────────────────────────────── -->
+<div id="app-shell" class="hidden min-h-screen flex">
+
+<!-- Sidebar -->
+<aside class="w-56 bg-white border-r border-gray-100 flex flex-col py-6 px-3 fixed h-full z-10">
+  <div class="flex items-center gap-2 px-3 mb-8">
+    <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
+      <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+    </div>
+    <span class="font-bold text-gray-900">PulseCheck</span>
+  </div>
+  <nav class="flex flex-col gap-1">
+    <a onclick="showPage('dashboard')" class="nav-link active" id="nav-dashboard">📊 Dashboard</a>
+    <a onclick="showPage('pulse')"     class="nav-link" id="nav-pulse">💓 My Pulse</a>
+    <a onclick="showPage('feedback')"  class="nav-link" id="nav-feedback">💬 Feedback</a>
+    <a onclick="showPage('actions')"   class="nav-link" id="nav-actions">📋 Actions</a>
+    <a onclick="showPage('org')"       class="nav-link" id="nav-org">🏢 Org Chart</a>
+    <a onclick="showPage('team')"      class="nav-link" id="nav-team">👥 Team</a>
+  </nav>
+  <div class="mt-auto px-1 border-t border-gray-100 pt-4">
+    <div class="flex items-center gap-2 mb-2">
+      <div id="login-avatar" class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-sm flex-shrink-0">?</div>
+      <div class="min-w-0">
+        <div id="logged-in-name" class="text-sm font-semibold text-gray-800 truncate">—</div>
+        <div id="logged-in-role" class="text-xs text-gray-400">—</div>
+      </div>
+    </div>
+    <button onclick="logout()" class="w-full text-left text-xs text-gray-400 hover:text-red-500 px-1 py-1 transition">← Sign out</button>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="ml-56 flex-1 p-6 overflow-auto">
+
+  <!-- DASHBOARD -->
+  <div id="page-dashboard" class="page">
+    <h1 class="text-2xl font-bold text-gray-900 mb-1">Dashboard</h1>
+    <p class="text-gray-500 text-sm mb-6">Team wellbeing at a glance</p>
+    <div id="stats-grid" class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 mb-6"></div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+      <div class="card"><h3 class="font-semibold text-gray-700 mb-4">Mood & Stress Trend</h3><canvas id="trend-chart" height="180"></canvas></div>
+      <div class="card"><h3 class="font-semibold text-gray-700 mb-4">Recent Check-ins</h3><div id="recent-checkins" class="space-y-2 max-h-64 overflow-y-auto"></div></div>
+    </div>
+    <div class="card"><h3 class="font-semibold text-gray-700 mb-4">Open Action Items</h3><div id="dash-actions" class="space-y-2"></div></div>
+  </div>
+
+  <!-- MY PULSE -->
+  <div id="page-pulse" class="page hidden">
+    <h1 class="text-2xl font-bold text-gray-900 mb-1">My Pulse Check-in</h1>
+    <p class="text-gray-500 text-sm mb-6">How are you feeling today?</p>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="card">
+        <h3 class="font-semibold text-gray-800 mb-4">Submit Check-in</h3>
+        <form onsubmit="submitCheckin(event)" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">😊 Mood (1=Low → 5=High)</label>
+            <input type="range" id="mood" min="1" max="5" value="3" oninput="document.getElementById('mood-val').textContent=this.value" style="border:none;padding:4px 0;" class="w-full"/>
+            <div class="flex justify-between text-xs text-gray-400 mt-1"><span>😔</span><span id="mood-val" class="font-bold text-indigo-600">3</span><span>😄</span></div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">⚡ Energy (1=Drained → 5=Energised)</label>
+            <input type="range" id="energy" min="1" max="5" value="3" oninput="document.getElementById('energy-val').textContent=this.value" style="border:none;padding:4px 0;" class="w-full"/>
+            <div class="flex justify-between text-xs text-gray-400 mt-1"><span>😴</span><span id="energy-val" class="font-bold text-indigo-600">3</span><span>🚀</span></div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">😰 Stress (1=Relaxed → 5=Very Stressed)</label>
+            <input type="range" id="stress" min="1" max="5" value="3" oninput="document.getElementById('stress-val').textContent=this.value" style="border:none;padding:4px 0;" class="w-full"/>
+            <div class="flex justify-between text-xs text-gray-400 mt-1"><span>😌</span><span id="stress-val" class="font-bold text-indigo-600">3</span><span>😤</span></div>
+          </div>
+          <div><label class="block text-sm font-medium text-gray-700 mb-1">Note (optional)</label><textarea id="checkin-note" rows="3" placeholder="Anything you'd like to share..."></textarea></div>
+          <button type="submit" class="btn btn-primary w-full">Submit Check-in</button>
+        </form>
+        <div id="checkin-success" class="hidden mt-3 text-green-600 font-medium text-sm text-center">✅ Check-in submitted!</div>
+      </div>
+      <div class="card"><h3 class="font-semibold text-gray-800 mb-4">Your Recent Check-ins</h3><div id="my-checkins" class="space-y-2 max-h-96 overflow-y-auto"></div></div>
+    </div>
+  </div>
+
+  <!-- FEEDBACK -->
+  <div id="page-feedback" class="page hidden">
+    <h1 class="text-2xl font-bold text-gray-900 mb-1">Feedback Surveys</h1>
+    <p class="text-gray-500 text-sm mb-6">Submit or review team feedback</p>
+
+    <!-- Manager / HR view: team responses -->
+    <div id="responses-view" class="hidden mb-8">
+      <h2 class="text-lg font-semibold text-gray-800 mb-4">📥 Team Responses</h2>
+      <div id="responses-list" class="space-y-3"></div>
+    </div>
+
+    <!-- Submit form (all roles) -->
+    <h2 class="text-lg font-semibold text-gray-800 mb-4" id="fb-submit-heading">📝 Active Surveys</h2>
+    <div id="forms-list" class="space-y-4"></div>
+    <div id="feedback-panel" class="hidden mt-6 card max-w-xl">
+      <h3 class="font-semibold text-gray-800 mb-4" id="fb-form-title"></h3>
+      <form id="fb-form" onsubmit="submitFeedback(event)" class="space-y-4">
+        <input type="hidden" id="fb-form-id"/>
+        <div><label class="block text-sm font-medium text-gray-700 mb-1">Job Satisfaction (1–5)</label><input type="range" id="fb-sat" min="1" max="5" value="3" oninput="document.getElementById('fb-sat-v').textContent=this.value" style="border:none;padding:4px 0;" class="w-full"/><span id="fb-sat-v" class="text-indigo-600 font-bold text-sm">3</span></div>
+        <div><label class="block text-sm font-medium text-gray-700 mb-1">Manager Support (1–5)</label><input type="range" id="fb-mgr" min="1" max="5" value="3" oninput="document.getElementById('fb-mgr-v').textContent=this.value" style="border:none;padding:4px 0;" class="w-full"/><span id="fb-mgr-v" class="text-indigo-600 font-bold text-sm">3</span></div>
+        <div><label class="block text-sm font-medium text-gray-700 mb-1">Workload Balance (1=Too Heavy → 5=Balanced)</label><input type="range" id="fb-wl" min="1" max="5" value="3" oninput="document.getElementById('fb-wl-v').textContent=this.value" style="border:none;padding:4px 0;" class="w-full"/><span id="fb-wl-v" class="text-indigo-600 font-bold text-sm">3</span></div>
+        <div><label class="block text-sm font-medium text-gray-700 mb-1">Comments</label><textarea id="fb-comments" rows="3" placeholder="Any additional feedback..."></textarea></div>
+        <div class="flex gap-2">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="button" onclick="document.getElementById('feedback-panel').classList.add('hidden')" class="btn" style="background:#f3f4f6;color:#374151;">Cancel</button>
+        </div>
+      </form>
+      <div id="fb-success" class="hidden mt-3 text-green-600 font-medium text-sm">✅ Feedback submitted! Thank you.</div>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div id="page-actions" class="page hidden">
+    <div class="flex items-center justify-between mb-6">
+      <div><h1 class="text-2xl font-bold text-gray-900 mb-1">Action Tracker</h1><p class="text-gray-500 text-sm">Kanban board</p></div>
+      <button onclick="document.getElementById('add-action-form').classList.toggle('hidden')" class="btn btn-primary">+ New Action</button>
+    </div>
+    <div id="add-action-form" class="hidden card mb-6 max-w-lg">
+      <h3 class="font-semibold text-gray-800 mb-3">New Action Item</h3>
+      <form onsubmit="addAction(event)" class="space-y-3">
+        <input type="text" id="action-title" placeholder="Action title *" required/>
+        <textarea id="action-desc" rows="2" placeholder="Description"></textarea>
+        <input type="text" id="action-assignee" placeholder="Assignee"/>
+        <select id="action-priority"><option value="1">🔴 High</option><option value="2" selected>🟡 Medium</option><option value="3">🟢 Low</option></select>
+        <input type="date" id="action-due"/>
+        <div class="flex gap-2">
+          <button type="submit" class="btn btn-success">Add</button>
+          <button type="button" onclick="document.getElementById('add-action-form').classList.add('hidden')" class="btn" style="background:#f3f4f6;color:#374151;">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div class="kanban-col"><h3 class="font-semibold text-gray-500 text-xs mb-3 uppercase tracking-wide">📋 Open</h3><div id="kanban-open"></div></div>
+      <div class="kanban-col"><h3 class="font-semibold text-gray-500 text-xs mb-3 uppercase tracking-wide">🔄 In Progress</h3><div id="kanban-progress"></div></div>
+      <div class="kanban-col"><h3 class="font-semibold text-gray-500 text-xs mb-3 uppercase tracking-wide">✅ Resolved</h3><div id="kanban-resolved"></div></div>
+      <div class="kanban-col"><h3 class="font-semibold text-gray-500 text-xs mb-3 uppercase tracking-wide">🚫 Dismissed</h3><div id="kanban-dismissed"></div></div>
+    </div>
+  </div>
+
+  <!-- ORG CHART -->
+  <div id="page-org" class="page hidden">
+    <div class="flex items-center justify-between mb-6">
+      <div><h1 class="text-2xl font-bold text-gray-900 mb-1">Org Chart</h1><p class="text-gray-500 text-sm">Hierarchy with live pulse scores</p></div>
+      <div class="flex gap-2">
+        <a href="/api/download-template" class="btn" style="background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;text-decoration:none;">⬇ Excel Template</a>
+        <button onclick="document.getElementById('import-panel').classList.toggle('hidden')" class="btn btn-primary">📤 Import Excel</button>
+      </div>
+    </div>
+    <div id="import-panel" class="hidden card mb-6 max-w-xl">
+      <h3 class="font-semibold text-gray-800 mb-2">Import Team from Excel / CSV</h3>
+      <p class="text-sm text-gray-500 mb-1">Required columns: <strong>Name *, Email *, Role *</strong></p>
+      <p class="text-sm text-gray-500 mb-3">Optional: <strong>Department, Job Title, Manager Email</strong></p>
+      <p class="text-sm text-gray-500 mb-3">Valid roles: <code>EMPLOYEE</code> · <code>MANAGER</code> · <code>HR_MANAGER</code> · <code>ADMIN</code></p>
+      <a href="/api/download-template" class="text-indigo-600 text-sm underline">⬇ Download template with example rows</a>
+      <form onsubmit="importUsers(event)" class="mt-3 space-y-3">
+        <input type="file" id="import-file" accept=".xlsx,.xls,.csv" required style="padding:6px;"/>
+        <div class="flex gap-2">
+          <button type="submit" class="btn btn-primary">Import</button>
+          <button type="button" onclick="document.getElementById('import-panel').classList.add('hidden')" class="btn" style="background:#f3f4f6;color:#374151;">Cancel</button>
+        </div>
+      </form>
+      <div id="import-result" class="hidden mt-3 text-sm"></div>
+    </div>
+    <div id="org-tree" class="space-y-1"></div>
+  </div>
+
+  <!-- TEAM -->
+  <div id="page-team" class="page hidden">
+    <div class="flex items-center justify-between mb-6">
+      <div><h1 class="text-2xl font-bold text-gray-900 mb-1">Team</h1><p class="text-gray-500 text-sm">All team members</p></div>
+      <button id="add-member-btn" onclick="document.getElementById('add-user-form').classList.toggle('hidden')" class="btn btn-primary">+ Add Member</button>
+    </div>
+    <div id="add-user-form" class="hidden card mb-6 max-w-lg">
+      <h3 class="font-semibold text-gray-800 mb-3">Add Team Member</h3>
+      <form onsubmit="addUser(event)" class="space-y-3">
+        <input type="text" id="user-name" placeholder="Full name *" required/>
+        <input type="email" id="user-email" placeholder="Email *" required/>
+        <select id="user-role"><option value="EMPLOYEE">Employee</option><option value="MANAGER">Manager</option><option value="HR_MANAGER">HR Manager</option><option value="ADMIN">Admin</option></select>
+        <input type="text" id="user-dept" placeholder="Department"/>
+        <input type="text" id="user-job" placeholder="Job Title"/>
+        <div class="flex gap-2">
+          <button type="submit" class="btn btn-primary">Add</button>
+          <button type="button" onclick="document.getElementById('add-user-form').classList.add('hidden')" class="btn" style="background:#f3f4f6;color:#374151;">Cancel</button>
+        </div>
+      </form>
+      <div id="add-user-error" class="hidden mt-2 text-red-600 text-sm"></div>
+    </div>
+    <div id="team-list" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+  </div>
+
+</main>
+
+</div><!-- end #app-shell -->
+
+<script>
+// ── API helpers ───────────────────────────────────────────────────────────────
+const api = async (path, method="GET", body=null) => {
+  const res = await fetch(path, { method, headers:{"Content-Type":"application/json"}, body: body ? JSON.stringify(body) : null });
+  return res.json();
+};
+
+// ── Utils ─────────────────────────────────────────────────────────────────────
+function timeAgo(dt){const s=(Date.now()-new Date(dt))/1000;if(s<60)return"just now";if(s<3600)return Math.floor(s/60)+"m ago";if(s<86400)return Math.floor(s/3600)+"h ago";return Math.floor(s/86400)+"d ago";}
+function sc(n){return n<=2?"score-low":n===3?"score-mid":"score-high";}
+function pill(n,label){return `<div class="text-center"><div class="score-pill ${sc(n)}">${n}</div><div class="text-xs text-gray-400 mt-1">${label}</div></div>`;}
+function roleColor(r){return r==="HR_MANAGER"?"bg-pink-100 text-pink-700":r==="MANAGER"?"bg-blue-100 text-blue-700":r==="ADMIN"?"bg-purple-100 text-purple-700":"bg-gray-100 text-gray-600";}
+function roleLabel(r){return r==="HR_MANAGER"?"HR Manager":r==="MANAGER"?"Manager":r==="ADMIN"?"Admin":"Employee";}
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let currentUser = null;
+let trendChart = null;
+let allUsersCache = [];
+
+// ── Role-based visibility ─────────────────────────────────────────────────────
+// SVP and above titles
+const SENIOR_TITLES = ["svp","senior vice president","evp","executive vice president","vp","vice president","director","senior director","managing director","md","ceo","cto","coo","cfo","chro","president"];
+
+function isSeniorLeader(user){
+  if(!user) return false;
+  const title = (user.job_title||"").toLowerCase();
+  return SENIOR_TITLES.some(t => title.includes(t));
+}
+
+function isHR(user){
+  if(!user) return false;
+  const dept = (user.department||"").toLowerCase();
+  const title = (user.job_title||"").toLowerCase();
+  return dept.includes("hr") || dept.includes("human resource") || title.includes("hr") || title.includes("human resource");
+}
+
+function canSeeAll(){
+  return currentUser && (
+    currentUser.role === "ADMIN" ||
+    isHR(currentUser) ||
+    isSeniorLeader(currentUser)
+  );
+}
+
+function getAccessLabel(user){
+  if(!user) return "";
+  if(user.role==="ADMIN") return "Admin — full access";
+  if(isHR(user)) return "HR — full org visibility";
+  if(isSeniorLeader(user)) return "Senior leader — full org visibility";
+  if(allUsersCache.some(u=>u.manager_id===user.id)) return "Manager — team visibility";
+  return "Employee — personal access";
+}
+
+function getVisibleUserIds(){
+  if(!currentUser) return [];
+  if(canSeeAll()) return allUsersCache.map(u=>u.id);
+  // Manager: self + all direct reports (recursive)
+  const ids = new Set([currentUser.id]);
+  function addReports(managerId){
+    allUsersCache.filter(u=>u.manager_id===managerId).forEach(u=>{ids.add(u.id);addReports(u.id);});
+  }
+  if(currentUser.role==="MANAGER" || allUsersCache.some(u=>u.manager_id===currentUser.id)){
+    addReports(currentUser.id);
+  }
+  return [...ids];
+}
+function getVisibleUsers(){ const ids=new Set(getVisibleUserIds()); return allUsersCache.filter(u=>ids.has(u.id)); }
+
+// ── Login ─────────────────────────────────────────────────────────────────────
+let pendingLoginUser = null;
+
+async function showLoginScreen(){
+  allUsersCache = await api("/api/users");
+  pendingLoginUser = null;
+  document.getElementById("login-email").value = "";
+  document.getElementById("login-error").classList.add("hidden");
+  document.getElementById("login-confirm").classList.add("hidden");
+  document.getElementById("login-screen").classList.remove("hidden");
+  document.getElementById("app-shell").classList.add("hidden");
+  setTimeout(()=>document.getElementById("login-email").focus(), 100);
+}
+
+async function loginByEmail(e){
+  e.preventDefault();
+  const email = document.getElementById("login-email").value.trim().toLowerCase();
+  const errEl = document.getElementById("login-error");
+  const confirmEl = document.getElementById("login-confirm");
+  errEl.classList.add("hidden");
+  confirmEl.classList.add("hidden");
+
+  allUsersCache = allUsersCache.length ? allUsersCache : await api("/api/users");
+  const user = allUsersCache.find(u => u.email.toLowerCase() === email);
+  if(!user){
+    errEl.textContent = `No account found for "${email}". Make sure your team has been imported via Excel.`;
+    errEl.classList.remove("hidden");
+    return;
+  }
+
+  pendingLoginUser = user;
+  document.getElementById("confirm-avatar").textContent = user.name.charAt(0).toUpperCase();
+  document.getElementById("confirm-name").textContent = user.name;
+  document.getElementById("confirm-meta").textContent = [user.job_title, user.department].filter(Boolean).join(" · ");
+  document.getElementById("confirm-access").textContent = getAccessLabel(user);
+  confirmEl.classList.remove("hidden");
+}
+
+function confirmLogin(){
+  if(!pendingLoginUser) return;
+  currentUser = pendingLoginUser;
+  document.getElementById("login-avatar").textContent = currentUser.name.charAt(0).toUpperCase();
+  document.getElementById("logged-in-name").textContent = currentUser.name;
+  document.getElementById("logged-in-role").textContent = currentUser.job_title || roleLabel(currentUser.role);
+  document.getElementById("login-screen").classList.add("hidden");
+  document.getElementById("app-shell").classList.remove("hidden");
+  showPage("dashboard");
+}
+
+function logout(){
+  currentUser=null;
+  showLoginScreen();
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+function showPage(page){
+  document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
+  document.querySelectorAll(".nav-link").forEach(l=>l.classList.remove("active"));
+  document.getElementById("page-"+page).classList.remove("hidden");
+  document.getElementById("nav-"+page).classList.add("active");
+  ({dashboard:loadDashboard,pulse:loadPulse,feedback:loadFeedback,actions:loadActions,org:loadOrg,team:loadTeam})[page]?.();
+}
+
+// ── Dashboard ─────────────────────────────────────────────────────────────────
+async function loadDashboard(){
+  const [allCheckins, actions] = await Promise.all([api("/api/pulse-checkins"), api("/api/action-items")]);
+  allUsersCache = allUsersCache.length ? allUsersCache : await api("/api/users");
+  const visibleIds = new Set(getVisibleUserIds());
+  const checkins = allCheckins.filter(c=>visibleIds.has(c.user_id));
+  const avg = (arr,key) => arr.length ? +(arr.reduce((s,x)=>s+x[key],0)/arr.length).toFixed(1) : null;
+  const visibleUsers = getVisibleUsers();
+
+  document.getElementById("stats-grid").innerHTML=[
+    {label: canSeeAll()?"All Employees":"My Team",  value:visibleUsers.filter(u=>u.role==="EMPLOYEE"||u.role==="MANAGER").length, icon:"👥"},
+    {label:"Avg Mood",    value:avg(checkins,"mood_score")??"—",   icon:"😊"},
+    {label:"Avg Energy",  value:avg(checkins,"energy_score")??"—", icon:"⚡"},
+    {label:"Avg Stress",  value:avg(checkins,"stress_score")??"—", icon:"😰"},
+    {label:"High Stress", value:new Set(checkins.filter(c=>c.stress_score>=4).map(c=>c.user_id)).size, icon:"⚠️"},
+    {label:"Open Actions",value:actions.filter(a=>a.status==="OPEN").length, icon:"📋"},
+  ].map(s=>`<div class="card text-center"><div class="text-2xl mb-1">${s.icon}</div><div class="text-2xl font-bold text-gray-900">${s.value}</div><div class="text-xs text-gray-500 mt-1">${s.label}</div></div>`).join("");
+
+  const days={};
+  checkins.forEach(c=>{const d=c.submitted_at.slice(0,10);if(!days[d])days[d]=[];days[d].push(c);});
+  const trend=Object.entries(days).sort(([a],[b])=>a.localeCompare(b)).slice(-7).map(([day,arr])=>({day,mood:avg(arr,"mood_score"),stress:avg(arr,"stress_score")}));
+  if(trendChart) trendChart.destroy();
+  trendChart=new Chart(document.getElementById("trend-chart"),{
+    type:"line",
+    data:{labels:trend.map(t=>t.day),datasets:[
+      {label:"Mood",  data:trend.map(t=>t.mood),  borderColor:"#10b981",backgroundColor:"rgba(16,185,129,0.1)",tension:0.4,fill:true},
+      {label:"Stress",data:trend.map(t=>t.stress),borderColor:"#ef4444",backgroundColor:"rgba(239,68,68,0.1)",  tension:0.4,fill:true},
+    ]},
+    options:{scales:{y:{min:1,max:5,ticks:{stepSize:1}}},plugins:{legend:{position:"bottom"}}},
+  });
+
+  document.getElementById("recent-checkins").innerHTML=checkins.slice(0,8).map(c=>`
+    <div class="flex items-center justify-between p-2 rounded-lg bg-gray-50">
+      <div><span class="font-medium text-sm text-gray-800">${c.user_name}</span><span class="text-xs text-gray-400 ml-2">${timeAgo(c.submitted_at)}</span>${c.note?`<p class="text-xs text-gray-500 mt-0.5 italic">"${c.note}"</p>`:""}</div>
+      <div class="score-pill ${sc(c.mood_score)}">${c.mood_score}</div>
+    </div>`).join("")||"<p class='text-gray-400 text-sm'>No check-ins yet.</p>";
+
+  const open=actions.filter(a=>a.status==="OPEN"||a.status==="IN_PROGRESS").slice(0,5);
+  document.getElementById("dash-actions").innerHTML=open.length?open.map(a=>`
+    <div class="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+      <div><span class="font-medium text-sm text-gray-800">${a.title}</span>${a.assignee?`<span class="text-xs text-gray-400 ml-2">→ ${a.assignee}</span>`:""}</div>
+      <span class="badge ${a.status==="OPEN"?"badge-open":"badge-progress"}">${a.status.replace("_"," ")}</span>
+    </div>`).join(""):`<p class="text-gray-400 text-sm">No open actions 🎉</p>`;
+}
+
+// ── My Pulse ──────────────────────────────────────────────────────────────────
+async function loadPulse(){
+  const checkins = await api("/api/pulse-checkins");
+  const mine = checkins.filter(c=>c.user_id===currentUser.id);
+  document.getElementById("my-checkins").innerHTML=mine.length?mine.map(c=>`
+    <div class="p-3 rounded-lg bg-gray-50 border border-gray-100">
+      <div class="text-xs text-gray-400">${new Date(c.submitted_at).toLocaleString()}</div>
+      <div class="flex gap-4 mt-2">${pill(c.mood_score,"Mood")}${pill(c.energy_score,"Energy")}${pill(c.stress_score,"Stress")}</div>
+      ${c.note?`<p class="text-xs text-gray-500 mt-2 italic">"${c.note}"</p>`:""}
+    </div>`).join(""):`<p class="text-gray-400 text-sm">No check-ins yet. Submit your first one!</p>`;
+}
+
+async function submitCheckin(e){
+  e.preventDefault();
+  await api("/api/pulse-checkins","POST",{user_id:currentUser.id,mood_score:+document.getElementById("mood").value,energy_score:+document.getElementById("energy").value,stress_score:+document.getElementById("stress").value,note:document.getElementById("checkin-note").value||null});
+  document.getElementById("checkin-note").value="";
+  const s=document.getElementById("checkin-success");
+  s.classList.remove("hidden");
+  setTimeout(()=>s.classList.add("hidden"),3000);
+  loadPulse();
+}
+
+// ── Feedback ──────────────────────────────────────────────────────────────────
+async function loadFeedback(){
+  const [forms, allResponses] = await Promise.all([api("/api/feedback-forms"), api("/api/feedback-responses")]);
+  const visibleIds = new Set(getVisibleUserIds());
+
+  // Show team responses panel for managers/HR
+  const canReview = canSeeAll() || currentUser.role === "MANAGER";
+  const rv = document.getElementById("responses-view");
+  if(canReview){
+    rv.classList.remove("hidden");
+    // Filter to only visible team members' responses
+    const myTeamResponses = allResponses.filter(r => r.user_id && visibleIds.has(r.user_id) && r.user_id !== currentUser.id);
+    if(myTeamResponses.length){
+      document.getElementById("responses-list").innerHTML = myTeamResponses.map(r => `
+        <div class="card">
+          <div class="flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <span class="font-semibold text-gray-800">${r.user_name}</span>
+              <span class="text-xs text-gray-400 ml-2">${timeAgo(r.submitted_at)}</span>
+              <div class="text-xs text-indigo-500 mt-0.5">${r.form_title}</div>
+            </div>
+            <div class="flex gap-4">
+              ${pill(r.satisfaction_score,"😊 Satisfaction")}
+              ${pill(r.manager_support_score,"👔 Mgr Support")}
+              ${pill(r.workload_score,"⚖️ Workload")}
+            </div>
+          </div>
+          ${r.comments ? `<p class="mt-2 text-sm text-gray-600 italic border-t border-gray-100 pt-2">"${r.comments}"</p>` : ""}
+        </div>`).join("");
+    } else {
+      document.getElementById("responses-list").innerHTML = `<p class="text-gray-400 text-sm">No team feedback submitted yet.</p>`;
+    }
+  } else {
+    rv.classList.add("hidden");
+  }
+
+  // Active surveys to respond to
+  document.getElementById("forms-list").innerHTML = forms.map(f => `
+    <div class="card flex items-center justify-between">
+      <div><h3 class="font-semibold text-gray-800">${f.title}</h3>${f.description?`<p class="text-sm text-gray-500">${f.description}</p>`:""}</div>
+      <button onclick="openFeedback(${f.id},'${f.title.replace(/'/g,"\\'")}')" class="btn btn-primary btn-sm">Respond</button>
+    </div>`).join("") || `<p class="text-gray-400">No active surveys.</p>`;
+}
+
+function openFeedback(id,title){
+  document.getElementById("fb-form-id").value=id;
+  document.getElementById("fb-form-title").textContent=title;
+  document.getElementById("feedback-panel").classList.remove("hidden");
+  document.getElementById("fb-success").classList.add("hidden");
+  document.getElementById("fb-form").classList.remove("hidden");
+  document.getElementById("feedback-panel").scrollIntoView({behavior:"smooth"});
+}
+
+async function submitFeedback(e){
+  e.preventDefault();
+  await api(`/api/feedback-forms/${document.getElementById("fb-form-id").value}/responses`,"POST",{
+    user_id: currentUser.id,
+    respondent_name: currentUser.name,
+    satisfaction_score:+document.getElementById("fb-sat").value,
+    manager_support_score:+document.getElementById("fb-mgr").value,
+    workload_score:+document.getElementById("fb-wl").value,
+    comments:document.getElementById("fb-comments").value||null
+  });
+  document.getElementById("fb-form").classList.add("hidden");
+  document.getElementById("fb-success").classList.remove("hidden");
+}
+
+// ── Actions ───────────────────────────────────────────────────────────────────
+async function loadActions(){
+  const items = await api("/api/action-items");
+  const cols={OPEN:"kanban-open",IN_PROGRESS:"kanban-progress",RESOLVED:"kanban-resolved",DISMISSED:"kanban-dismissed"};
+  Object.entries(cols).forEach(([status,elId])=>{
+    const list=items.filter(a=>a.status===status).sort((a,b)=>a.priority-b.priority);
+    document.getElementById(elId).innerHTML=list.map(a=>`
+      <div class="kanban-card p${a.priority}">
+        <div class="font-medium text-sm text-gray-800 mb-1">${a.title}</div>
+        ${a.description?`<p class="text-xs text-gray-500 mb-1">${a.description}</p>`:""}
+        ${a.assignee?`<div class="text-xs text-gray-400">👤 ${a.assignee}</div>`:""}
+        <div class="flex gap-1 mt-2 flex-wrap">
+          ${status!=="IN_PROGRESS"&&status!=="RESOLVED"?`<button onclick="moveAction(${a.id},'IN_PROGRESS')" class="btn btn-sm" style="background:#dbeafe;color:#1e40af;padding:2px 8px;">→ Start</button>`:""}
+          ${status!=="RESOLVED"?`<button onclick="moveAction(${a.id},'RESOLVED')" class="btn btn-sm" style="background:#d1fae5;color:#065f46;padding:2px 8px;">✓ Done</button>`:""}
+          ${status!=="DISMISSED"?`<button onclick="moveAction(${a.id},'DISMISSED')" class="btn btn-sm" style="background:#fee2e2;color:#b91c1c;padding:2px 8px;">✕</button>`:""}
+          <button onclick="deleteAction(${a.id})" class="btn btn-sm" style="background:#f9fafb;color:#9ca3af;padding:2px 8px;">🗑</button>
+        </div>
+      </div>`).join("")||`<p class="text-xs text-gray-400 text-center py-4">Empty</p>`;
+  });
+}
+
+async function moveAction(id,status){await api(`/api/action-items/${id}`,"PATCH",{status});loadActions();}
+async function deleteAction(id){if(!confirm("Delete?"))return;await api(`/api/action-items/${id}`,"DELETE");loadActions();}
+
+async function addAction(e){
+  e.preventDefault();
+  await api("/api/action-items","POST",{title:document.getElementById("action-title").value,description:document.getElementById("action-desc").value||null,assignee:document.getElementById("action-assignee").value||null,priority:+document.getElementById("action-priority").value,due_date:document.getElementById("action-due").value||null});
+  document.getElementById("add-action-form").classList.add("hidden");
+  e.target.reset();
+  loadActions();
+}
+
+// ── Org Chart ─────────────────────────────────────────────────────────────────
+async function loadOrg(){
+  const roots = await api("/api/org-hierarchy");
+  function renderNode(node,depth){
+    const l=node.latest_checkin;
+    const border=depth===0?"#6366f1":depth===1?"#10b981":depth===2?"#f59e0b":"#d1d5db";
+    const pulse=l?`<div class="flex gap-2 mt-2">${pill(l.mood_score,"😊")}${pill(l.energy_score,"⚡")}${pill(l.stress_score,"😰")}</div>`:`<span class="text-xs text-gray-300 mt-1 block">No check-in yet</span>`;
+    const children=node.reports?.length?node.reports.map(c=>renderNode(c,depth+1)).join(""):"";
+    return `<div style="margin-left:${depth*32}px;margin-bottom:6px;">
+      <div class="card py-3 px-4" style="border-left:4px solid ${border}">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="font-semibold text-gray-800">${node.name}</span>
+          <span class="badge ${roleColor(node.role)}">${roleLabel(node.role)}</span>
+          ${node.reports?.length?`<span class="text-xs text-gray-400">${node.reports.length} direct report${node.reports.length>1?"s":""}</span>`:""}
+        </div>
+        <div class="text-xs text-gray-400 mt-0.5">${node.job_title||""}${node.department?" · "+node.department:""}</div>
+        ${pulse}
+      </div>${children}</div>`;
+  }
+  document.getElementById("org-tree").innerHTML=roots.length
+    ?roots.map(n=>renderNode(n,0)).join("")
+    :`<div class="card text-center py-10"><p class="text-gray-400 mb-2">No org hierarchy yet.</p><p class="text-sm text-gray-400">Use <strong>Import Excel</strong> with a Manager Email column to build the tree.</p></div>`;
+}
+
+async function importUsers(e){
+  e.preventDefault();
+  const file=document.getElementById("import-file").files[0];
+  if(!file)return;
+  const form=new FormData();
+  form.append("file",file);
+  const el=document.getElementById("import-result");
+  el.classList.remove("hidden");
+  el.innerHTML=`<div class="text-gray-500">⏳ Importing...</div>`;
+  try{
+    const res=await fetch("/api/import-users",{method:"POST",body:form});
+    const data=await res.json();
+    if(data.success){
+      allUsersCache = await api("/api/users");
+      el.innerHTML=`<div class="text-green-700 bg-green-50 rounded-lg p-3">✅ <strong>${data.added} members added</strong>, <strong>${data.updated} updated</strong>${data.errors.length?`<br>⚠️ ${data.errors.join("<br>")}`:""}</div>`;
+      document.getElementById("import-file").value="";
+      setTimeout(()=>{document.getElementById("import-panel").classList.add("hidden");el.classList.add("hidden");},4000);
+      loadOrg(); loadTeam();
+    }else{
+      el.innerHTML=`<div class="text-red-700 bg-red-50 rounded-lg p-3">❌ ${data.error}</div>`;
+    }
+  }catch(err){
+    el.innerHTML=`<div class="text-red-700 bg-red-50 rounded-lg p-3">❌ Could not connect. Is the server running? (node server.js)</div>`;
+  }
+}
+
+// ── Team ──────────────────────────────────────────────────────────────────────
+async function loadTeam(){
+  const [users, checkins] = await Promise.all([api("/api/users"), api("/api/pulse-checkins")]);
+  allUsersCache = users;
+  const visibleUsers = getVisibleUsers();
+  const latest={};
+  checkins.forEach(c=>{if(!latest[c.user_id])latest[c.user_id]=c;});
+  const managerMap={};
+  users.forEach(u=>{managerMap[u.id]=u.name;});
+
+  // Show/hide Add Member button (HR and Admin only)
+  document.getElementById("add-member-btn").style.display = canSeeAll() ? "" : "none";
+
+  const pageTitle = document.querySelector("#page-team p.text-gray-500");
+  if(pageTitle) pageTitle.textContent = canSeeAll() ? "All team members" : currentUser.role==="MANAGER" ? "Your direct reports" : "Your profile";
+
+  document.getElementById("team-list").innerHTML=visibleUsers.length?visibleUsers.map(u=>{
+    const l=latest[u.id];
+    const isMe=u.id===currentUser.id;
+    return `<div class="card${isMe?" ring-2 ring-indigo-200":""}">
+      <div class="flex items-start justify-between gap-2">
+        <div class="min-w-0 flex-1">
+          <div class="font-semibold text-gray-900">${u.name}${isMe?` <span class="text-xs text-indigo-400 font-normal">(you)</span>`:""}</div>
+          <div class="text-sm text-gray-500">${u.job_title||"—"} · ${u.department||"—"}</div>
+          <div class="text-xs text-gray-400">${u.email}</div>
+          ${u.manager_id?`<div class="text-xs text-indigo-500 mt-0.5">Reports to: ${managerMap[u.manager_id]||"Unknown"}</div>`:""}
+        </div>
+        <span class="badge ${roleColor(u.role)} flex-shrink-0">${roleLabel(u.role)}</span>
+      </div>
+      ${l
+        ?`<div class="mt-3 pt-3 border-t border-gray-100">
+            <div class="text-xs text-gray-400 mb-2">Last check-in · ${timeAgo(l.submitted_at)}</div>
+            <div class="flex gap-3">${pill(l.mood_score,"Mood")}${pill(l.energy_score,"Energy")}${pill(l.stress_score,"Stress")}</div>
+            ${l.note?`<p class="text-xs text-gray-500 mt-2 italic">"${l.note}"</p>`:""}
+          </div>`
+        :`<div class="mt-3 text-xs text-gray-400">No check-ins yet</div>`}
+    </div>`;
+  }).join(""):`<p class="text-gray-400">No team members to show.</p>`;
+}
+
+async function addUser(e){
+  e.preventDefault();
+  const errEl=document.getElementById("add-user-error");
+  errEl.classList.add("hidden");
+  try{
+    const res=await fetch("/api/users",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:document.getElementById("user-name").value,email:document.getElementById("user-email").value,role:document.getElementById("user-role").value,department:document.getElementById("user-dept").value||null,job_title:document.getElementById("user-job").value||null})});
+    const data=await res.json();
+    if(data.error){errEl.textContent=data.error;errEl.classList.remove("hidden");return;}
+    document.getElementById("add-user-form").classList.add("hidden");
+    e.target.reset();
+    allUsersCache = await api("/api/users");
+    loadTeam();
+  }catch(err){errEl.textContent="Could not connect to server.";errEl.classList.remove("hidden");}
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+(async()=>{
+  await showLoginScreen();
+})();
+</script>
+</body>
+</html>

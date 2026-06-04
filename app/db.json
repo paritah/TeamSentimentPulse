@@ -1,0 +1,797 @@
+{
+  "users": [
+    {
+      "id": 6,
+      "name": "Ansari, Akram",
+      "email": "akram.ansari@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 7,
+      "name": "Baba, Shahabashz",
+      "email": "shahabashz.baba@citiustech.com",
+      "role": "MANAGER",
+      "department": "Engineering",
+      "job_title": "Service Delivery Manager",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 8,
+      "name": "Bapardekar, Nihal",
+      "email": "nihal.bapardekar@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 9,
+      "name": "Barve, Shashank",
+      "email": "shashank.barve@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 10,
+      "name": "Bhade, Rushikesh",
+      "email": "rushikesh.bhade@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 11,
+      "name": "Bharati, Abhishek",
+      "email": "abhishek.bharati@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 12,
+      "name": "Bhattacharya, Chandranath",
+      "email": "chandranath.bhattacharya@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 13,
+      "name": "Chalke, Sagar",
+      "email": "sagar.chalke@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 14,
+      "name": "Chandran, Prasanth",
+      "email": "prasanth.chandran@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 15,
+      "name": "Chaugule, Niraj",
+      "email": "niraj.chaugule@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 16,
+      "name": "Chavan, Pooja",
+      "email": "pooja.chavan2@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 17,
+      "name": "Choudhary, Samata",
+      "email": "samata.choudhary@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 18,
+      "name": "Dande, Srivalli",
+      "email": "srivalli.dande@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 19,
+      "name": "Das, Anuskriti",
+      "email": "anuskriti.das@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 20,
+      "name": "Devalapur, Jyoti",
+      "email": "jyoti.devalapur@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 21,
+      "name": "Doke, Shamli",
+      "email": "shamli.doke@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 22,
+      "name": "Dukka, Durgamohan",
+      "email": "durgamohan.dukka@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 23,
+      "name": "Dusar, Roshan",
+      "email": "roshan.dusar@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 24,
+      "name": "G, Praveen",
+      "email": "praveen.g@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 25,
+      "name": "Galande, Tulsi",
+      "email": "tulsi.galande@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 26,
+      "name": "Gavhane, Swapnil",
+      "email": "swapnil.gavhane@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 27,
+      "name": "Ghatkar, Suraj",
+      "email": "suraj.ghatkar@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 28,
+      "name": "H G, Yashaswini",
+      "email": "yashaswini.hg@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 29,
+      "name": "Hirve, Suraj",
+      "email": "suraj.hirve@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 30,
+      "name": "Jadav, Jay",
+      "email": "jay.jadav@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 31,
+      "name": "Joseph, Mathew",
+      "email": "mathew.joseph@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 32,
+      "name": "Kadam, Nikhil",
+      "email": "nikhil.kadam2@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.136Z"
+    },
+    {
+      "id": 33,
+      "name": "Kagdi, Burhanuddin",
+      "email": "burhanuddin.kagdi@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 34,
+      "name": "Kalgutkar, Saloni",
+      "email": "saloni.kalgutkar@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 35,
+      "name": "Kambale, Yogesh",
+      "email": "yogesh.kambale.p@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 36,
+      "name": "Kamble, Ankit",
+      "email": "ankit.kamble@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 37,
+      "name": "Kashyap, Kanika",
+      "email": "kanika@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 7,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 38,
+      "name": "Keer, Anika",
+      "email": "anika.keer@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 39,
+      "name": "Khodwe, Shantanu",
+      "email": "shantanu.khodwe@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 40,
+      "name": "Kinnera, Pittala",
+      "email": "pittala.kinnera@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 41,
+      "name": "Kiran, Usha",
+      "email": "usha.kiran@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 42,
+      "name": "Koltharkar, Snehal",
+      "email": "snehal.koltharkar@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 43,
+      "name": "Kubade, Anurag",
+      "email": "anurag.kubade@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 44,
+      "name": "Kumar, Niraj",
+      "email": "niraj.kumar2@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 45,
+      "name": "Kumar, Rahul",
+      "email": "rahul.kumar@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 46,
+      "name": "Londhe, Aradhana",
+      "email": "aradhana.londhe@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 47,
+      "name": "Malhotra, Sagar",
+      "email": "sagar.malhotra2@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 48,
+      "name": "Mohammed, Asjad Pasha",
+      "email": "asjadpasha.mohammed@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 49,
+      "name": "Nadar, Selvalakshmi",
+      "email": "selvalakshmi.nadar@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 50,
+      "name": "Naiknaware, Snehal",
+      "email": "snehal.naiknaware@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 51,
+      "name": "Namdeo, Rudresh",
+      "email": "rudresh.namdeo@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 52,
+      "name": "Nangude, Akshay",
+      "email": "akshay.nangude@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 53,
+      "name": "Narvade, Sandeep",
+      "email": "sandeep.narvade@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 54,
+      "name": "Natkar, Chandrakant",
+      "email": "chandrakant.natkar@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 55,
+      "name": "Pathan, Karimulla",
+      "email": "karimulla.pathan@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 56,
+      "name": "Pattanayak, Alok",
+      "email": "alok.pattanayak.p@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 57,
+      "name": "Peerzade, Muzammil",
+      "email": "muzammil.peerzade@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 58,
+      "name": "Pillai, Vishnu",
+      "email": "vishnu.pillai2@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 59,
+      "name": "R, Devi",
+      "email": "devi.r@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 60,
+      "name": "R, Madhu Sudhan",
+      "email": "madhusudhan.r@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 61,
+      "name": "Rastogi, Akhil",
+      "email": "akhil.rastogi@citiustech.com",
+      "role": "HR_MANAGER",
+      "department": "Human resource",
+      "job_title": "Delivery Lead Specialist",
+      "manager_id": null,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 62,
+      "name": "Ravichandan, BS",
+      "email": "bs.ravichandan@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 63,
+      "name": "Reddy, Subhash Chandra",
+      "email": "subhash.reddy@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 64,
+      "name": "S, Shashikiran",
+      "email": "shashikiran.s@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 65,
+      "name": "Samant, Shivani",
+      "email": "shivani.samant@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 66,
+      "name": "Satle, Rachit",
+      "email": "rachit.satle@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 67,
+      "name": "Sen, Abhijeet",
+      "email": "abhijeet.sen@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 68,
+      "name": "Shah, Sarferaj",
+      "email": "sarferaj.shah@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 69,
+      "name": "Shrivastava, Madhur",
+      "email": "madhur.shrivastava@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 70,
+      "name": "Singh, Akshaya Kumar",
+      "email": "akshayakumar.singh@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 71,
+      "name": "Sirsat, Ajay",
+      "email": "ajay.sirsat@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 72,
+      "name": "Surve, Kamlesh",
+      "email": "kamlesh.surve@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 73,
+      "name": "Swar, Neelam",
+      "email": "neelam.swar@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 74,
+      "name": "Taunk, Pankaj Kumar",
+      "email": "pankajkumar.taunk@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 75,
+      "name": "Thakare, Nikhil",
+      "email": "nikhil.thakare@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 76,
+      "name": "Thete, Shraddha",
+      "email": "shraddha.thete@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 77,
+      "name": "Tiwari, Shailesh",
+      "email": "shailesh.tiwari@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 78,
+      "name": "Varghese, Nithin",
+      "email": "nithin.varghese@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 79,
+      "name": "Verma, Ram",
+      "email": "ram.verma@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    },
+    {
+      "id": 80,
+      "name": "Weginwar, Shantanu",
+      "email": "shantanu.weginwar@citiustech.com",
+      "role": "EMPLOYEE",
+      "department": "Engineering",
+      "job_title": "Software Engineer",
+      "manager_id": 61,
+      "created_at": "2026-05-27T15:58:48.137Z"
+    }
+  ],
+  "pulse_checkins": [
+    {
+      "id": 1,
+      "user_id": 61,
+      "mood_score": 4,
+      "energy_score": 4,
+      "stress_score": 4,
+      "note": "Felling stressed",
+      "submitted_at": "2026-05-28T15:42:32.441Z"
+    },
+    {
+      "id": 2,
+      "user_id": 7,
+      "mood_score": 5,
+      "energy_score": 5,
+      "stress_score": 5,
+      "note": "Stressed",
+      "submitted_at": "2026-05-28T15:51:32.049Z"
+    }
+  ],
+  "feedback_forms": [
+    {
+      "id": 1,
+      "title": "May 2026 Pulse Survey",
+      "description": "Monthly team wellbeing survey",
+      "status": "ACTIVE",
+      "created_at": "2026-05-28T05:35:29.412Z"
+    }
+  ],
+  "feedback_responses": [
+    {
+      "id": 1,
+      "form_id": 1,
+      "user_id": 61,
+      "respondent_name": "Rastogi, Akhil",
+      "satisfaction_score": 4,
+      "manager_support_score": 5,
+      "workload_score": 4,
+      "comments": "Feeling stressed",
+      "submitted_at": "2026-05-28T15:43:02.398Z"
+    }
+  ],
+  "action_items": []
+}
